@@ -3,14 +3,14 @@ package com.itb.inf3cm.pizzariabemmelhor.model.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @DiscriminatorValue("FUNCIONARIO")
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Funcionario extends Usuario {
 

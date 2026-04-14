@@ -2,9 +2,7 @@ package com.itb.inf3cm.pizzariabemmelhor.model.entity;
 
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,6 +12,9 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Pedido {
 
     @Id

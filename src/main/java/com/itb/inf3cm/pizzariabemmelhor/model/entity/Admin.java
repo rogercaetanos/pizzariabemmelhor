@@ -3,9 +3,7 @@ package com.itb.inf3cm.pizzariabemmelhor.model.entity;
 
 import jakarta.persistence.DiscriminatorValue;
 import jakarta.persistence.Entity;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 
 @Entity
@@ -13,6 +11,8 @@ import lombok.Setter;
 @Setter
 @Getter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
 public class Admin extends Usuario {
 
     private String nivelAcesso;

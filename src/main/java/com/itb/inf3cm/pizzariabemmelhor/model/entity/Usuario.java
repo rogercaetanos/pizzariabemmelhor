@@ -1,11 +1,8 @@
 package com.itb.inf3cm.pizzariabemmelhor.model.entity;
 
-
 import com.itb.inf3cm.pizzariabemmelhor.model.enums.TipoUsuario;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -16,6 +13,9 @@ import java.time.LocalDate;
 @Setter // Atribui informação ao atributo
 @Getter // Recupera a informação do atributo
 @EqualsAndHashCode(onlyExplicitlyIncluded = true) // Otimizar a busca dentro de coleções e evitar duplicidade de objetos
+@NoArgsConstructor   // Construtor sem parâmetros (padrão)
+@AllArgsConstructor  // Construtor com todos parâmetros
+@Builder             // Forma otimizada para criação de objetos
 public class Usuario {
 
     @Id   // Chave Primária
