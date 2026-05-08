@@ -1,6 +1,5 @@
 package com.itb.inf3cm.pizzariabemmelhor.exceptions;
 
-
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -29,11 +28,9 @@ public class AppExceptionHandler {
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<Object> handleAllException(Exception ex, HttpServletRequest request){
-
+    public ResponseEntity<?> handleAllException(Exception ex, HttpServletRequest request){
         // Define o status
         HttpStatus status = EXCEPTION_STATUS_MAP.getOrDefault(ex.getClass(), HttpStatus.INTERNAL_SERVER_ERROR);
-
         // Define a mensagem
         String message = (ex instanceof Forbidden || ex instanceof AccessDeniedException)
                 ? "Você não tem permissão para acessar este recurso."
@@ -45,5 +42,4 @@ public class AppExceptionHandler {
 
         return new ResponseEntity<>(errorMessage, new HttpHeaders(), status);
     }
-
 }
