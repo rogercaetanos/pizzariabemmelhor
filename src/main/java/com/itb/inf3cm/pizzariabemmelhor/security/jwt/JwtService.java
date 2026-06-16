@@ -1,6 +1,5 @@
 package com.itb.inf3cm.pizzariabemmelhor.security.jwt;
 
-
 import com.itb.inf3cm.pizzariabemmelhor.model.entity.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

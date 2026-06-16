@@ -3,8 +3,12 @@ package com.itb.inf3cm.pizzariabemmelhor.model.entity;
 import com.itb.inf3cm.pizzariabemmelhor.model.enums.TipoUsuario;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDate;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "Usuario")
@@ -16,7 +20,7 @@ import java.time.LocalDate;
 @NoArgsConstructor   // Construtor sem parâmetros (padrão)
 @AllArgsConstructor  // Construtor com todos parâmetros
 @Builder             // Forma otimizada para criação de objetos
-public class Usuario {
+public class Usuario implements UserDetails {
 
     @Id   // Chave Primária
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Auto-Increment (identificado de 1 em 1 )
@@ -49,4 +53,34 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     @Column(length = 20, name = "tipo_usuario",  insertable = false, updatable = false)
     private TipoUsuario tipoUsuario;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of();
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
