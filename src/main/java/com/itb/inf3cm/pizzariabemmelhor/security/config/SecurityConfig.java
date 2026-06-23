@@ -29,6 +29,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests( req ->
                         req
                                 .requestMatchers(WHITE_LIST).permitAll()
+                                .requestMatchers("/api/v1/produtos").permitAll()
                                 .anyRequest().authenticated()
                         );
         return http.build();

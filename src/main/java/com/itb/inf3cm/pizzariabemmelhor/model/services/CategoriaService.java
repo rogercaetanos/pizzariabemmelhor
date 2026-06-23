@@ -1,5 +1,6 @@
 package com.itb.inf3cm.pizzariabemmelhor.model.services;
 
+import com.itb.inf3cm.pizzariabemmelhor.model.repository.CategoriaRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

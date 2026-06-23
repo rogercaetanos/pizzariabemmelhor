@@ -1,12 +1,17 @@
 package com.itb.inf3cm.pizzariabemmelhor.controller;
 
+import com.itb.inf3cm.pizzariabemmelhor.exceptions.BadRequest;
+import com.itb.inf3cm.pizzariabemmelhor.exceptions.NotFound;
+import com.itb.inf3cm.pizzariabemmelhor.model.entity.Categoria;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.itb.inf3cm.pizzariabemmelhor.model.entity.Produto;
 import com.itb.inf3cm.pizzariabemmelhor.model.services.CategoriaService;
 import com.itb.inf3cm.pizzariabemmelhor.model.services.ProdutoService;
-import com.itb.inf3cm.pizzariabemmelhor.dto.produto.*;;
-
+import com.itb.inf3cm.pizzariabemmelhor.dto.produto.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import java.net.URI;
 
 
 @RestController
@@ -24,10 +29,19 @@ public class ProdutoController {
 
 
     @PostMapping
-    public ResponseEntity <Object> saveProduto(@RequestBody ProdutoRequest produtoRequest) {
+    public ResponseEntity<Produto> saveProduto(@RequestBody ProdutoRequest produtoRequest) {
         Produto produto = criarProduto(produtoRequest);
 
-    return null;
+        if(produtoRequest.getCategoriaId() != null){
+            try {
+                Categoria categoria = categoriaService.findById(produtoRequest.getCategoriaId());
+                produto.setCategoria(categoria);
+            }catch (Exception e){
+                throw new BadRequest("Não foi encontrado a categoria como o id "+ produtoRequest.getCategoriaId());
+            }
+        }
+        URI uri = URI.create(ServletUriComponentsBuilder.fromCurrentRequest().path("/api/v1/produtos").toUriString());
+        return ResponseEntity.created(uri).body(produtoService.save(produto));
    }
 
 
@@ -44,6 +58,5 @@ public class ProdutoController {
         
         return produto;
     }
-
 
 }
