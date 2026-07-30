@@ -1,7 +1,6 @@
 package com.itb.inf3cm.pizzariabemmelhor.controller;
 
 import com.itb.inf3cm.pizzariabemmelhor.exceptions.BadRequest;
-import com.itb.inf3cm.pizzariabemmelhor.exceptions.NotFound;
 import com.itb.inf3cm.pizzariabemmelhor.model.entity.Categoria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
