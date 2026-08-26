@@ -14,5 +14,5 @@ import lombok.*;
 @EqualsAndHashCode(callSuper = true)
 public class Funcionario extends Usuario {
 
-    private String chn;
+    private String cnh;
 }

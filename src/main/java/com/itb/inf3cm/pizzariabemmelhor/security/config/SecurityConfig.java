@@ -7,6 +7,7 @@ import com.itb.inf3cm.pizzariabemmelhor.security.jwt.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -17,6 +18,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -53,11 +59,24 @@ public class SecurityConfig {
 
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .cors(AbstractHttpConfigurer::disable)
+                //.cors(AbstractHttpConfigurer::disable)
+                .cors(cors-> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests( req ->
                         req
                                 .requestMatchers(WHITE_LIST).permitAll()
-                                .requestMatchers("/api/v1/produtos").permitAll()
+
+                                // PRODUTO
+                                .requestMatchers(HttpMethod.GET,"/api/v1/produtos").permitAll()
+
+
+                                // CLIENTE
+                                .requestMatchers(HttpMethod.POST, "/api/v1/clientes").permitAll()
+
+                                // PEDIDO
+
+                                // CATEGORIA
+
+
                                 .anyRequest().authenticated()
                         )
                 .exceptionHandling(
@@ -78,4 +97,32 @@ public class SecurityConfig {
 
         return http.build();
     }
+
+    // Desenvolvimento local
+    // Em produção, a configuração do CORS é feito no servidor de deploy, neste caso, Desconsiderar o código abaixo.
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration config = new CorsConfiguration();
+
+        // ORIGENS PERMITIDAS (ajuste conforme seu front-end)
+        config.setAllowedOrigins(List.of(
+                "http://localhost:8686", //  seu mobile por exemplo flutter
+                "http://localhost:5173",  // seu web por exemplo react
+                "http://localhost:5174"   // outro front-end
+        ));
+
+        // MÉTODOS HTTP PERMITIDOS
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+
+        // CABEÇALHOS E CREDENCIAIS
+        config.setAllowedHeaders(List.of("*"));
+        config.setAllowCredentials(true);
+
+        // REGISTRA A CONFIGURAÇÃO PARA TODOS OS ENDPOINTS
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", config);
+        return source;
+    }
+
 }
