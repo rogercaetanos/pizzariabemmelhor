@@ -24,6 +24,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.List;
 
+import static com.itb.inf3cm.pizzariabemmelhor.model.enums.Permission.PRODUTO_CREATE;
+import static com.itb.inf3cm.pizzariabemmelhor.model.enums.Permission.PRODUTO_UPDATE;
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
@@ -66,7 +69,11 @@ public class SecurityConfig {
                                 .requestMatchers(WHITE_LIST).permitAll()
 
                                 // PRODUTO
-                                .requestMatchers(HttpMethod.GET,"/api/v1/produtos").permitAll()
+
+                                .requestMatchers(HttpMethod.GET,"/api/v1/produtos").permitAll()  // catálago
+                                .requestMatchers(HttpMethod.GET,"/api/v1/produtos/**").permitAll() // específico
+                                .requestMatchers(HttpMethod.POST,"/api/v1/produtos").hasAuthority(PRODUTO_CREATE.name())
+                                .requestMatchers(HttpMethod.PUT,"/api/v1/produtos").hasAuthority(PRODUTO_UPDATE.name())
 
 
                                 // CLIENTE
